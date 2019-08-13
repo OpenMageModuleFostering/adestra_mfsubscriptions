@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <customer_account>
+		 <reference name="customer_account_navigation">
+			<action method="addLink" translate="label" module="mfsubscriptions"><name>mfsubscriptions</name><path>mfsubscriptions/manage/index</path><label>Newsletter Subscriptions</label></action>			
+	   		<remove name="customer_account_dashboard_newsletter" />
+			<action method="addLink"><name>newsletter</name><path></path><label></label></action> <!-- removes default Mage Newsletter link --> 
+		</reference> 
+    </customer_account>
+	
+	<mfsubscriptions_manage_index translate="label">
+		<update handle="customer_account"/>
+        <label>Customer My Account Newsletter Subscriptions</label>
+        <reference name="my.account.wrapper">
+            <block type="mfsubscriptions/account_customer_subscriptions" name="customer_newsletter">
+                <block type="page/html_wrapper" name="customer.subscriptions.form.before" as="form_before" translate="label">
+                    <label>Newsletter Subscription Form Before</label>
+                    <action method="setMayBeInvisible"><value>1</value></action>
+                </block>
+            </block>
+        </reference>
+	</mfsubscriptions_manage_index>
+
+<!--	<checkout_onepage_review translate="label">
+		<reference name="checkout.onepage.review.info.items.after">
+				<block type="mfsubscriptions/account_checkout_review" output="toHtml" name="mfsubscriptions.review" template="mfsubscriptions/checkout/form/review.phtml"/>
+		</reference>
+	</checkout_onepage_review>
+-->
+</layout>

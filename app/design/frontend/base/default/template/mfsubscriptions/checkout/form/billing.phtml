@@ -1,0 +1,38 @@
+
+<?php if (Mage::getStoreConfig('adestra/mfsubscriptions/enabled')) : ?>
+<?php if (Mage::getStoreConfig('adestra/mfsubscriptions/enablecheckout')) : ?>
+<?php $customer = Mage::getSingleton('customer/session')->getCustomer(); ?>
+<?php $contact = Mage::helper('mfsubscriptions')->getMFContactFromCustomer($customer); ?>
+<?php if (empty($contact['id'])) $contact = Mage::helper('mfsubscriptions')->updateMFContact($customer->getId());  // customer does not exists so create it.?>
+<?php $visible_lists = Mage::helper('mfsubscriptions')->getNonAutomaticLists(); ?>
+<?php $automatic_lists = Mage::helper('mfsubscriptions')->getAutomaticLists(); ?>
+<?php $subscribed_lists = Mage::helper('mfsubscriptions')->getMFSubscribedLists($contact); ?>
+<?php if (count($visible_lists) > 0) : ?>
+    <div id="mfsubscriptions" class="fieldset">
+        <h2 class="legend"><?php echo $this->__('Email Subscriptions') ?></h2>
+        <ul class="form-list" id="subscription-lists">
+		<?php foreach ($visible_lists as $list) { ?> 
+        <?php if (array_search($list->getListId(),$subscribed_lists) !== FALSE) $subscribed = TRUE; else $subscribed = FALSE; ?>
+            <li class="control"><input type="checkbox" name="mf_subscription_lists[<?php echo $list->getListId(); ?>]" id="<?php echo $list->getListId(); ?>" value="<?php echo $subscribed?'1':'0'; ?>" <?php echo $subscribed?'checked':''; ?> title="<?php echo $list->getDescription() ?>"<?php if($this->getIsSubscribed()): ?> checked="checked"<?php endif; ?> onclick="this.value = this.checked ? 1 : 0;" class="checkbox subscription-list" /><label for="subscription"><?php echo $list->getDescription() ?></label></li>
+		<?php } ?>
+        </ul>
+    </div>  
+<?php endif; ?>
+<?php foreach ($automatic_lists as $list) { ?> 
+<input type="hidden" class="subscription-list" name="mf_subscription_lists[<?php echo $list->getListId(); ?>]" id="<?php echo $list->getListId(); ?>" value="1"/>
+<?php } ?>
+<input type="hidden" name="mf_subscription_id" value="<?php echo $contact['id'] ?>" />
+<?php endif; ?>
+<?php endif; ?>
+<?php if(!Mage::getSingleton('customer/session')->isLoggedIn()) : ?>
+<script type="text/javascript">
+Event.observe('login:guest', 'click', function() {    
+      $('mfsubscriptions').hide();
+});
+Event.observe('login:register', 'click', function() {    
+      $('mfsubscriptions').show();
+});
+if ($('login:guest').checked=true) { $('mfsubscriptions').hide(); }
+if ($('login:register').checked=true) { $('mfsubscriptions').show(); }
+</script>
+<?php endif; ?>

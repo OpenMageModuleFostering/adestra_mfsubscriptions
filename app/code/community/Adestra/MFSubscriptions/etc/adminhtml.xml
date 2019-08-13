@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <adestra translate="title" module="mfsubscriptions">
+            <title>Adestra</title>
+            <sort_order>100</sort_order>
+            <children>
+                <mfsubscriptions>
+                    <title>Account Settings</title>
+                    <sort_order>1</sort_order>
+                    <action>adminhtml/system_config/edit/section/adestra</action>
+                </mfsubscriptions>
+                <messagefocuslist>
+                    <title>MessageFocus Lists</title>
+                    <sort_order>1</sort_order>
+                    <action>adminhtml/messagefocuslists</action>
+                </messagefocuslist>
+            </children>
+        </adestra>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>               
+                    <adestra translate="title" module="mfsubscriptions">
+                        <title>Adestra MessageFocus</title>
+                        <sort_order>1</sort_order>
+                    </adestra>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config> 
+
+
+   

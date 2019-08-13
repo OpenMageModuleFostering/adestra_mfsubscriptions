@@ -1,0 +1,21 @@
+
+<?php if (Mage::getStoreConfig('adestra/mfsubscriptions/enabled')) : ?>
+<?php if (Mage::getStoreConfig('adestra/mfsubscriptions/enableregister')) : ?>
+<?php $visible_lists = Mage::helper('mfsubscriptions')->getNonAutomaticLists(); ?>
+<?php $automatic_lists = Mage::helper('mfsubscriptions')->getAutomaticLists(); ?>
+<?php if (count($visible_lists) > 0) : ?>
+    <div class="fieldset">
+        <h2 class="legend"><?php echo $this->__('Email Subscriptions') ?></h2>
+        <ul class="form-list">
+		<?php foreach ($visible_lists as $list) { ?> 
+        <?php if ($list->getDefaultSub()) $subscribed = TRUE; else $subscribed = FALSE; ?>
+            <li class="control"><input type="checkbox" name="subscription_lists[<?php echo $list->getListId(); ?>]" id="<?php echo $list->getListId(); ?>" value="<?php echo $subscribed?'1':'0'; ?>" <?php echo $subscribed?'checked':''; ?> title="<?php echo $list->getDescription() ?>"<?php if($this->getIsSubscribed()): ?> checked="checked"<?php endif; ?> onclick="this.value = this.checked ? 1 : 0;" class="checkbox" /><label for="subscription"><?php echo $list->getDescription() ?></label></li>
+		<?php } ?>
+        </ul>
+    </div>  
+<?php endif; ?>
+<?php foreach ($automatic_lists as $list) { ?> 
+<input type="hidden" name="subscription_lists[<?php echo $list->getListId(); ?>]" id="<?php echo $list->getListId(); ?>" value="1"/>
+<?php } ?>
+<?php endif; ?>
+<?php endif; ?>

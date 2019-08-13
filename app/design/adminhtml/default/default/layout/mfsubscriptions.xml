@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <adminhtml_messagefocuslists_index>
+        <reference name="content">
+            <!-- We also reference our block by namespacename_modulename/adminhtml_controllername, and name it uniquely -->
+            <block type="mfsubscriptions/adminhtml_lists" name="mfsubscriptions.lists" />
+        </reference>
+    </adminhtml_messagefocuslists_index>
+
+    <adminhtml_messagefocuslists_edit>
+        <reference name="head">
+              <action method="addJs"><script>adestra/mfsubscriptions/adminhtml.js</script></action>
+        </reference>
+    </adminhtml_messagefocuslists_edit>
+    <adminhtml_customer_edit>
+        <reference name="head">
+              <action method="addJs"><script>adestra/mfsubscriptions/adminhtml.js</script></action>
+        </reference>
+    </adminhtml_customer_edit>
+	
+<!--    <adminhtml_customer_edit>
+         <reference name="customer_edit_tabs">
+            <action method="addTab"><name>customer_edit_tab_subscriptions</name><block>mfsubscriptions/adminhtml_customer_edit_tab_subscriptions</block></action>
+        </reference>
+   </adminhtml_customer_edit>-->
+   
+<!--    <adminhtml_customer_newsletter>
+   		<remove name="admin.customer.newsletter.grid" />
+    </adminhtml_customer_newsletter>
+-->
+
+</layout>

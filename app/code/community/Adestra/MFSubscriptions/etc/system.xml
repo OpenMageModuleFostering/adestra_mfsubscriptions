@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<config>
+<sections>
+    <adestra translate="label">
+	  <label>Adestra</label>
+	  <tab>general</tab>
+	  <frontend_type>text</frontend_type>
+	  <sort_order>2000</sort_order>
+	  <show_in_default>1</show_in_default>
+	  <show_in_website>1</show_in_website>
+	  <show_in_store>0</show_in_store>
+      <groups>
+        <!-- Subscription Group -->
+        <mfsubscriptions translate="label" module="mfsubscriptions">
+			<label>MessageFocus Subscription</label>
+			<frontend_type>text</frontend_type>
+			<sort_order>-200</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>0</show_in_store>
+			<expanded>1</expanded>
+			<fields>
+				<enabled translate="label">
+					<label>Enabled</label>
+				    <frontend_type>select</frontend_type>
+				    <source_model>adminhtml/system_config_source_yesno</source_model>
+					<sort_order>1</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>0</show_in_store>
+				</enabled>
+				<accountid translate="label">
+					<label>Account Name</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>2</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>0</show_in_store>
+				</accountid>
+				<apiusername translate="label">
+					<label>API Username</label>
+<!--					<backend_model>mfsubscriptions/admin</backend_model>
+-->					<frontend_type>text</frontend_type>
+					<sort_order>3</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>0</show_in_store>
+				</apiusername>
+				<apipassword translate="label">
+					<label>API Password</label>
+					<frontend_type>password</frontend_type>
+					<sort_order>4</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>0</show_in_store>
+					<comment><![CDATA[Note: passwords containing special characters such as @ & # may cuase problems connecting to MessageFocus]]></comment>
+				</apipassword>
+				<apiendpoint translate="label">
+					<label>API XML-RPC End Point</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>5</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>0</show_in_store>
+				</apiendpoint>
+				<coretableid translate="label">
+					<label>Default Core Table ID</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>6</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>0</show_in_store>
+				</coretableid>
+				<coretablefieldsmapping translate="label">
+					<label>Core Table Field Mapping</label>
+					<frontend_type>textarea</frontend_type>
+					<sort_order>7</sort_order>
+					<rows>5</rows>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>0</show_in_store>
+					<comment><![CDATA[MessageFocus additional core fields mapping. Use the format {magento_field}|{message_focus_field} and one field mapping per line e.g. account.firstname|first_name. Additional Magento fields include: prefix, firstname, lastname, company]]></comment>
+				</coretablefieldsmapping>
+				<enableregister translate="label">
+					<label>Enable Register Subscription</label>
+				    <frontend_type>select</frontend_type>
+				    <source_model>adminhtml/system_config_source_yesno</source_model>
+					<sort_order>8</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>0</show_in_store>
+				</enableregister>
+				<enablecheckout translate="label">
+					<label>Enable Checkout Subscription</label>
+				    <frontend_type>select</frontend_type>
+				    <source_model>adminhtml/system_config_source_yesno</source_model>
+					<sort_order>9</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>0</show_in_store>
+				</enablecheckout>
+				<debug translate="label">
+					<label>Debug</label>
+				    <frontend_type>select</frontend_type>
+				    <source_model>adminhtml/system_config_source_yesno</source_model>
+					<sort_order>10</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>0</show_in_store>
+					<comment><![CDATA[Writes conversion data to system.log.]]></comment>
+				</debug>
+			</fields>
+			<comment><![CDATA[Enter global options for MessageFocus Subscription.]]></comment>
+        </mfsubscriptions>
+      </groups>	  
+    </adestra>
+</sections>
+</config>

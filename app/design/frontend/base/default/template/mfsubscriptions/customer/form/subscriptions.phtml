@@ -1,0 +1,74 @@
+
+<div class="page-title">
+    <h1><?php echo $this->__('Email Subscriptions') ?></h1>
+</div>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<?php echo $this->getChildHtml('form_before')?>
+<?php $customer = Mage::getSingleton('customer/session')->getCustomer(); ?>
+<?php $contact = Mage::helper('mfsubscriptions')->getMFContactFromCustomer($customer); ?>
+<?php if (empty($contact['id'])) $contact = Mage::helper('mfsubscriptions')->updateMFContact($customer->getId());  // customer does not exists so create it.?>
+<?php $subscribed_lists = Mage::helper('mfsubscriptions')->getMFSubscribedLists($contact); ?>
+<?php $subscription_lists = Mage::helper('mfsubscriptions')->getActiveLists($customer); ?>
+
+<?php if (count($subscription_lists)) : ?>
+<form action="<?php echo $this->getAction() ?>" method="post" id="form-validate">
+<input type="hidden" name="contact_id" value="<?php echo $contact['id'] ?>"  />
+    <div class="fieldset">
+        <?php echo $this->getBlockHtml('formkey')?>
+        <h2 class="legend"><?php echo $this->__('Email Subscriptions') ?></h2>
+        <ul class="form-list">
+        <?php $visible_lists = 0; ?>
+		<?php foreach ($subscription_lists as $list) { ?> 
+        <?php if (Mage::helper('mfsubscriptions')->isSubscribeList($list->type)) : ?>
+        <?php if (array_search($list->getListId(),$subscribed_lists) !== FALSE) $subscribed = TRUE; else $subscribed = FALSE; ?>
+        <?php if (!$list->getAutomaticSub()) : ?>
+            <li class="control"><input type="checkbox" name="subscription_lists[<?php echo $list->getListId(); ?>]" id="<?php echo $list->getListId(); ?>" value="<?php echo $subscribed?'1':'0'; ?>" <?php echo $subscribed?'checked':''; ?> title="<?php echo $list->getDescription() ?>" onclick="mfSubscribe(this.checked); this.value = this.checked ? 1 : 0;" class="checkbox mf-subscribe" /><label for="subscription"><?php echo $list->getDescription() ?></label></li>
+            <?php $visible_lists++; ?>
+        <?php else : ?>
+            <input type="hidden" class="mf-subscribe" name="subscription_lists[<?php echo $list->getListId(); ?>]" id="<?php echo $list->getListId(); ?>" value="<?php echo $subscribed?1:0; ?>"/>
+        <?php endif; ?>
+        <?php else : ?>
+        <?php if (Mage::helper('mfsubscriptions')->adestra_unsublist_check($customer->email,$list->getUnsubListId())) $unsubscribed = TRUE; else $unsubscribed = FALSE; ?>
+            <li class="control"><input type="checkbox" name="subscription_lists[<?php echo $list->getUnsubListId(); ?>]" id="<?php echo $list->getUnsubListId(); ?>" value="<?php echo $unsubscribed?'1':'0'; ?>" <?php echo $unsubscribed?'checked':''; ?> title="<?php echo $list->getDescription() ?>" onclick="mfUnsubscribeAll(this.checked); this.value = this.checked ? 1 : 0;" class="checkbox mf-unsubscribe" /><label for="subscription"><?php echo $list->getDescription() ?></label></li>
+            <?php $visible_lists++; ?>        
+        <?php endif; ?>
+		<?php } ?>
+        </ul>
+        <?php if ($visible_lists == 0) : ?>
+        <p><?php echo $this->__('You have no email subscription lists.') ?></p>
+        <?php endif; ?>
+    </div>
+    <div class="buttons-set">
+        <p class="back-link"><a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+        <button type="submit" title="<?php echo $this->__('Save') ?>" class="button"><span><span><?php echo $this->__('Save') ?></span></span></button>
+    </div>
+</form>
+<?php /* Extensions placeholder */ ?>
+<script type="text/javascript">
+//<![CDATA[
+    var dataForm = new VarienForm('form-validate', true);
+	
+	function mfUnsubscribeAll(checked) {
+		if (checked) {
+			var subscribeLists = $$('.mf-subscribe');
+			subscribeLists.each(function(list) {
+				list.checked = false;
+				list.value = 0;
+			});
+		}
+	}
+	
+	function mfSubscribe(checked) {
+		if (checked) {
+			var unSubscribeLists = $$('.mf-unsubscribe');
+			unSubscribeLists.each(function(list) {
+				list.checked = false;
+			});
+		}	
+	}
+	
+//]]>
+</script>
+<?php else : ?>
+<p><?php echo $this->__('You have no email subscription lists.') ?></p>
+<?php endif; ?>
